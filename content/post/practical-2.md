@@ -4,7 +4,7 @@ date: 2020-10-07T22:00:00+00:00
 hero: "/images/prac_2_f1.png"
 excerpt: Spectral indices, atmospheric interference and water detection
 timeToRead: 3
-authors: []
+authors: - Geethen Singh
 
 ---
 **Practical 2: Spectral indices, atmospheric interference and water detection**
