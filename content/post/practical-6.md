@@ -2,7 +2,7 @@
 authors = []
 date = 2020-10-03T13:00:00Z
 excerpt = "Fire frequency in the Kruger National Park, South Africa"
-hero = "/images/prac6_f4.png"
+hero = "/images/prac6_f0.png"
 timeToRead = 15
 title = "Practical 6"
 
@@ -23,24 +23,30 @@ By the end of this practical you should be able to:
 
 ***
 
+**Introduction**
+Fire is blah blah blah
+
+***
+
 **Data import**
 
-The datasets that we will use for this practical are largely already available on Google Earth Engine. In addition to these datasets, we will practice how to import a local dataset into GEE.
+In addition to datasets available on Google Earth Engine, in this practical we will learn how to import shapefiles from your local hard-drive into GEE by uploading them as new assets (Fig. 1).
 
 ```js
 var dem = ee.Image("CGIAR/SRTM90_V4");
 var FireCCI = ee.ImageCollection('ESA/CCI/FireCCI/5_1');
 ```
 
-The first two datasets imported correspond to those already available within GEE and are the Shuttle Radar Topography Mission (SRTM) digital elevation dataset and the MODIS Fire_cci Burned Area pixel product version 5.1 (FireCCI51). Below we describe how to import a dataset available locally into GEE. You can download and save the required boundary shapefile for the Kruger National Park (Kruger) from [here](https://drive.google.com/file/d/1omD5vPk4LMQSnC2BHJCg6GlnmpzBsFQG/view?usp=sharing).
+The first dataset, [SRTM90](https://developers.google.com/earth-engine/datasets/catalog/CGIAR_SRTM90_V4), is a Digital Elevation Model (DEM) from the Shuttle Radar Topography Mission (SRTM). The second, [FireCCI51](https://developers.google.com/earth-engine/datasets/catalog/ESA_CCI_FireCCI_5_1), is a Fire_cci Burned Area pixel product version 5.1 from MODIS. Figure 1 below, describes how to import the boundary shapefile for the Kruger National Park (Kruger) from files stored locally on your hard-drive. You can download and save the required files from [here](https://drive.google.com/file/d/1omD5vPk4LMQSnC2BHJCg6GlnmpzBsFQG/view?usp=sharing).
 
-## ![](/images/prac6_f1.png)
+![](/images/prac6_f1.png)
+**Figure 1:** Process to upload a shapefile into GEE as a new assest imported into the script as a FeatureColection
 
 ***
 
 **Filtering data**
 
-We first define variables for the temporal and spatial windows of interest. We will use these variables to filter our data before processing.
+First define your variables for the temporal and spatial windows of interest. We will use these variables to filter our data before processing.
 
 ```js
 var startDate = ee.Date.fromYMD(2001,1,1);
@@ -63,9 +69,10 @@ var fire = FireCCI
 
 **Processing**
 
-We will build a function to remove all burn scars from the fire dataset that have a confidence interval of less than 50%.
+Now build a function to remove all burn scars from the fire dataset that have a confidence interval of less than 50%.
 
 ```js
+// Define a function to remove all fires <50% confidence interval
 var confMask = function(img) {
   var conf = img.select('ConfidenceLevel');
   var level = conf.gt(50);
@@ -73,19 +80,21 @@ var confMask = function(img) {
 };
 ```
 
-Then we will run the function and summarise the burn scars by the day-of-year (doy) most frequently burnt, followed by the the frequency areas are burnt in Kruger annually from 2001 until 2018.
+Run the function and summarise the burn scars by the day-of-year (doy) most frequently burnt, followed by the the frequency areas are burnt in Kruger annually from 2001 until 2018.
 
 ```js
+// Most frequently burnt DOY
 var fireDOY_list = years.map(function(year) {
   return fire
     .filterMetadata('year', 'equals', year) // Filter image collection by year
     .map(confMask) // Apply confidence mask >50%
-    .reduce(ee.Reducer.mode()) // Reduce image collection by most common DOY
+    .reduce(ee.Reducer.mode()).rename('fire_doy') // Reduce image collection by most common DOY
     .set('year', year) // Set composite year as an image property
     .set('system:time_start', ee.Date.fromYMD(year, 1, 1));
 });
 var doyFires = ee.ImageCollection.fromImages(fireDOY_list); // Convert the image List back to an ImageCollection
 
+// Frequency of days burnt
 var fireCnt_list = years.map(function(year) {
   return fire
     .filterMetadata('year', 'equals', year) // Filter image collection by year
@@ -97,10 +106,10 @@ var fireCnt_list = years.map(function(year) {
 var cntFiresDOY = ee.ImageCollection.fromImages(fireCnt_list); // Convert the image List back to an ImageCollection
 ```
 
-Similarly, we can summarise these results to represent the most frequently burnt day-of-year (doy) and the most frequently burnt areas in Kruger over the last 18 years (2001-2018).
+Summarise these results to represent the most frequently burnt day-of-year (doy) and the frequency areas have burnt in Kruger over the last 18 years (2001-2018).
 
 ```js
-var modFires = cntFiresDOY.mode().clip(knp_geo);
+var modFires = doyFires.mode().clip(knp_geo);
 var cntFires = cntFiresDOY.sum().clip(knp_geo);
 ```
 
@@ -108,92 +117,125 @@ var cntFires = cntFiresDOY.sum().clip(knp_geo);
 
 **Charting**
 
-We will now chart the annual sum of rainfall for Braulio Carrillo 2000 to 2018. Here, we first define chart parameters (e.g. title and axis labels). Thereafter, we create the line chart that incorporates these pre-defined chart parameters.
+To plot these results, first define your chart parameters (e.g. title and axis labels), then create the line chart, incorporating these pre-defined chart parameters and `print` it to the console as follows:
 
 ```js
-var opt_chart_annualPrecip = {
-  title: 'Mean Annual Rainfall: Braulio Carrillo',
+// Chart parameters
+var opt_cntFireMonth = {
+  title: 'Monthly fire frequencies: Kruger National Park 2001 to 2018',
+  pointSize: 3,
   hAxis: {title: 'Year'},
-  vAxis: {title: 'Rainfall (mm)'},};
+  vAxis: {title: 'Number of fires'},
+};
 
-var chart_annualPrecip = ui.Chart.image.seriesByRegion({
-  imageCollection: annualPrecip, 
-  regions: myBraulio_geo,
-  reducer: ee.Reducer.mean(),
-  scale: 5000,
-  xProperty: 'date',
-  seriesProperty: 'band'
-}).setOptions(opt_chart_annualPrecip)
-  .setChartType('LineChart');
-print(chart_annualPrecip);
+// Plot day count of monthly fires
+var cntFireMonth_chart = ui.Chart.image.series({ // ui.Chart.image.byRegion
+  imageCollection: fire.select('BurnDate'),
+  region: knp_geo,
+  reducer: ee.Reducer.countDistinct(),
+  scale: 250
+}).setOptions(opt_cntFireMonth).setChartType('LineChart');
+print(cntFireMonth_chart);
 ```
 
-It is also possible to plot both rainfall and EVI within a single chart. This may be valuable in understanding the relationship between these two variables. To create a comparative line chart of rainfall and EVI summaries for Braulio Carrillo. As in the previous chart, we first define chart parameters and then create the line chart with two y-axes using the processed summaries
-
-```js
-var opt_annualRainEVI = {title: "Annual Max Rainfall vs. 'Greenness (EVI): Braulio Carrillo", pointSize: 3,
-    legend: {maxLines: 5, position: 'top'},
-    series: { 0: {targetAxisIndex: 0},
-              1: {targetAxisIndex: 1}},
-        vAxes: {Adds titles to each axis.
-          0: {title: 'Max EVI (*0.0001)'},
-          1: {title: 'Max Rainfall (mm)'}},};
-
-var rain_ndvi_chart = ui.Chart.image.series({
-  imageCollection: annualRainEVI.select(['evi', 'rain']),
-  region:myBraulio_geo,
-  reducer: ee.Reducer.mean(),
-  scale: 5000
-}).setOptions(opt_annualRainEVI);
-print(rain_ndvi_chart);
-```
+![](/images/prac6_f2a.png)
+**Figure 2:** Line chart the number of days a fire occured in Kruger from 2001 to 2018.
 
 ***
 
 **Visualisation**
 
-In addition to creating charts, you may want to create a sharable image visualisation that is viewable on any electronic device. We can create GEE application) to achieve this. Here the first step is to define the various map elements to visualise results. This includes; defining a map title and legend parameters.
+To visualise the long-term summaries of your results, first setup your map elements as you've done in previous practicals.
 
 ```js
-var title = ui.Label('Costa Rica: Mean Annual Rainfall 2000 to 2018', {
-  stretch: 'horizontal',
-  textAlign: 'center',
-  fontWeight: 'bold',
-  fontSize: '20px'});
+// Define legend parameters for unique DOY
+// Light colours are earlier in the year, dark colours are later
+var visDOY = {
+    min:1, max:366, 
+    palette:['eef5b7','99f74f','4ff7b0','4fc2f7',
+    '3940db','7239db','db39db','db395c','7c1229']};
 
-var rainViz = {
-  min: 175, max: 317, 
-  palette: 'ffffff, 67d9f1, 1036cb'};
+// Define a legend for fire frequency
+// Light colours are areas that burn less frequently, 
+// dark colours are areas that burn often
+var visCnt = {
+    min:1, max:12, 
+    palette:['eef5b7','99f74f','4ff7b0','4fc2f7','3940db',
+             '7239db','db39db','db395c','7c1229']};
+
+Map.centerObject(knp, 7);
+Map.addLayer(modFires, visDOY, 'Most frequently burnt day in Kruger (2001-2018)',true, 0.8)
+Map.addLayer(cntFires, visCnt, 'Fire frequency: Kruger Park (2001-2018)',true, 0.8)
+Map.addLayer(knp,{color: 'grey'}, 'Kruger',true, 0.8);  // Add Kruger boundary
 ```
 
-Next, we center the map to Costa Rica. All other layers will align with this parent map and add the data of interest. Specifically, we add the long-term mean rainfall raster and the Braulio Carrillo boundary. To conclude, we will add a zoom control button and the previously defined title.
+![](/images/prac6_f3.png)
+**Figure 3:** Map with layers indicating the most frequently burnt doy-of-year (doy) and the fire requency in Kruger from 2001 to 2018.
+
+***
+
+**Hillshade and Animation**
 
 ```js
-Map.centerObject(costaRica, 8);
-Map.addLayer(rainMean, rainViz, 'Mean Annual Rainfall'); 
-Map.addLayer(braulio,{color: 'grey'}, 'Braulio Carrillo',true, 0.8);  
-Map.setControlVisibility({zoomControl: true});
-Map.add(title);
+//display hillshading and slope
+var hillshade = ee.Terrain.hillshade(dem);
+// print('Check hillshade',hillshade);
+
+// Set the clipped SRTM image as background
+var srtmVis = hillshade.visualize(srtmParams);
+
+// Define GIF visualization parameters
+var gifParams = {
+  'region': knp_geo,
+  'dimensions': 500,
+  'crs': 'EPSG:3857', // Check projection
+  'framesPerSecond': 1
+};
+
+// Define the hillshade background legend parameters
+var srtmParams = {
+  min: 120, // Elevation min 100
+  max: 200, // Elevation max 840
+  gamma: 1,
+};
+
+// Create RGB visualization images for use as animation frames.
+var srtmFires = doyFires.map(function(img) {
+  return srtmVis
+        .paint(knp, 'grey', 1) // Add KNP boundary
+        .blend(img.visualize(visDOY).clipToCollection(knp)); // Blend hillshade with knp and clip
+});
+
+// Print the GIF URL to the console
+var myGIF = srtmFires.getVideoThumbURL(gifParams);
+print(myGIF);
+
+// Render the GIF animation in the console
+print(ui.Thumbnail({
+  image: srtmFires,
+  params: gifParams,
+  style: {
+    position: 'bottom-right',
+    width: '180px'
+  }}));
 ```
 
-To save this map online as a GEE app, follow the steps below:
-
-1. Click the 'Apps' button above Select 'NEW APP'
-2. Give the App a Name
-3. Leave everything else default
-4. Click 'PUBLISH' URL will appear - Click this to see your first online interactive map
-5. If you see a 'Not ready' page, give it a few minutes and try again
-
-![](/images/prac4_f2.png)
+![](/images/prac6_f4.gif)
+**Figure 4:** Animation of days fires occurred in Kruger from 2001 to 2018. Light colours represent fires that happened earlier in the year, while dark colours are those that burnt in later months.
 
 ***
 
 **Data Export**
 
-To export the data shown in the created charts, similar to practical 3, you may simply maximise the chart and then click to export to the available formats (csv, svg or png). Alternatively, you may script the export. this option benefits from having more options to customise the data export. For example, including numerous variables and, potentially a well- formatted date: time variable. In this practical, this is achieved by first using a reducer to get the mean rainfall value for Braulio Carrillo for each year and adding a date variable. The exported csv table will contain a column for both date and mean annual rainfall. you will find this csv file in your google drive.
+To export the animation, simply right mouse-click and select `Save Image As…` to save the animation locally as a .GIF file to your hard-drive.
 
-![](/images/prac4_f3.png)
+As a last step, save the script.
 
-In addition, to the export options presented above and in practical 3. You may also export the results as a rasterStack with multiple layers representing the sum of annual rainfall for Braulio Carrillo. We will first create a list of band names for the rasterStack output and apply the function toBands() to the image collection to stack all bands into a single image. Each band will contain a unique name corresponding to, in this example, the year of the annual sum.
+***
+
+**Practical 6 Exercise**
+
+Repeat this practical but use xxx instead of xxx and xxx instead of the Kruger National Park.
+To share your script, click on Get Link and then copy script path. Send your completed script to [**email**](mailto:sandra@biogis.co.za).
 
 Do you have any feedback for this practical? Please complete this quick (2-5 min) survey [here](https://forms.gle/hT11ReQpvG2oLDxF7).

@@ -1,5 +1,5 @@
 +++
-authors = Joseph White
+authors = []
 date = 2020-10-11T22:00:00Z
 excerpt = "Importing, exploring and visualising datasets"
 hero = "/images/practical_1_hero_image.png"
