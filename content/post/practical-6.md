@@ -1,6 +1,6 @@
 +++
 authors = []
-date = 2020-10-03T13:00:00Z
+date = 2020-10-26T13:00:00Z
 excerpt = "Fire frequency in the Kruger National Park, South Africa"
 hero = "/images/prac6_f0.png"
 timeToRead = 15
@@ -218,10 +218,21 @@ print(ui.Thumbnail({
     position: 'bottom-right',
     width: '180px'
   }}));
+
+// Or add it to your map
+// Create a video thumbnail and add it to the map.
+var thumb = ui.Thumbnail({
+  // Specifying a collection for "image" animates the sequence of images.
+  image: srtmFires,
+  params: gifParams,
+  style: {
+    position: 'bottom-right',
+    width: '180px'
+  }});
+Map.add(thumb);
 ```
 
-![](/images/prac6_f4.gif)
-**Figure 4:** Animation of days fires occurred in Kruger from 2001 to 2018. Light colours represent fires that happened earlier in the year, while dark colours are those that burnt in later months.
+![](/images/prac6_f4.gif)**Figure 4:** Animation of days fires occurred in Kruger from 2001 to 2018. Light colours represent fires that happened earlier in the year, while dark colours are those that burnt in later months.
 
 ***
 
@@ -236,6 +247,6 @@ As a last step, save the script.
 **Practical 6 Exercise**
 
 Repeat this practical but use xxx instead of xxx and xxx instead of the Kruger National Park.
-To share your script, click on Get Link and then copy script path. Send your completed script to [**email**](mailto:sandra@biogis.co.za).
+To share your script, click on Get Link and then copy script path. Send your completed script to [**email**](mailto:ots.online.education@gmail.com).
 
 Do you have any feedback for this practical? Please complete this quick (2-5 min) survey [here](https://forms.gle/hT11ReQpvG2oLDxF7).

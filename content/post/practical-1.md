@@ -1,6 +1,6 @@
 +++
 authors = []
-date = 2020-10-11T22:00:00Z
+date = 2020-10-19T22:00:00Z
 excerpt = "Importing, exploring and visualising datasets"
 hero = "/images/practical_1_hero_image.png"
 timeToRead = 3
@@ -144,13 +144,13 @@ As the last step, save the script.
 
 **Practical 1 Exercise**
 
-Repeat this practical but use the Landsat-8 dataset. Produce a false colour image using the near infra-red band for a region in your country. Hint: the band names for Landsat-8 and Sentinel-2 satellites are different. Explore the dataset metadata to find the correct band names.
+Repeat this practical but use the Landsat-8 dataset. Produce a false colour image using the near infra-red band for a region in your country. Hint: the band names and the metadata labels for cloud cover for Landsat-8 and Sentinel-2 satellites are different. Explore the metadata to find the correct band names.
 
 ```js
-ee.ImageCollection("LANDSAT/LC08/C01/T1_TOA ");
+ee.ImageCollection("LANDSAT/LC08/C01/T1_SR");
 ```
 
-To share your script, click on Get Link and then copy the script path. Send your completed script to **email.**
+To share your script, click on Get Link and then copy the script path. Send your completed script to [ots.online.education@gmail.com](mailto:ots.online.education@gmail.com)
 
 ![](/images/practical_1_script_path.png)
 
