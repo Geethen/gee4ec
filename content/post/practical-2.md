@@ -101,6 +101,28 @@ In the above code snippet, the function gt() returns a 1 if the first value is g
 
 Recently, there has been a drive towards Analysis Ready Data (ARD) i.e. in part, this includes data that has already been corrected for atmospheric interferences, however, there is a considerable amount of uncertainty and variance associated with the results of different atmospheric correction algorithms. This, together with the fact that atmospherically corrected Sentinel-2 data is not available for areas outside of Europe from 2015 (the start of the archive) to 2018 i.e. level 1C (atmospherically uncorrected) data is only available. It is therefore important to understand the effects of atmospheric interference on water detection.
 
+To visually explore the results of the atmospheric effects on water detection, we will repeat the steps above for the level-2A (atmospherically corrected) data.
+
+```js
+var filtered = s22a.filterBounds(Theewaterskloof)
+    .filterDate('2019-05-01','2019-08-14')
+    .median();
+  
+Map.centerObject(Theewaterskloof,14);
+Map.addLayer(filtered,{bands:['B4','B3','B2'],min:0,max:3000},'RGB');
+
+var NDVI = filtered.normalizedDifference(['B8','B4']);
+var NDWI = filtered.normalizedDifference(['B3','B8']);
+
+var vis = ['FFFFFF', 'CE7E45', 'DF923D', 'F1B555', 'FCD163', '99B718',
+              '74A901', '66A000', '529400', '3E8601', '207401', '056201',
+              '004C00', '023B01', '012E01', '011D01', '011301'];
+              
+Map.addLayer(NDVI,{min: 0, max: 1, palette: vis},'NDVI');
+Map.addLayer(NDWI,{min: -1, max: 1, palette: vis},'NDWI');
+Map.addLayer(NDWI.gt(NDVI),{},'water_2a');
+```
+
 ![](/images/prac2_f3.png)
 
 **Figure 3:** The influence of atmospheric interference on the detection
