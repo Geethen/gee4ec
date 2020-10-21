@@ -7,7 +7,9 @@ timeToRead: 3
 authors: []
 
 ---
-**Practical 2: Spectral indices, atmospheric interference and water detection**
+**Practical 2: Spectral indices, atmospheric interference, and water detection**
+
+Authored by Geethen Singh
 
 Access the completed practical script [here](https://code.earthengine.google.com/69f9fe758e00f7caba12f4f88352b49e)
 
