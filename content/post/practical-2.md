@@ -112,10 +112,7 @@ Sentinel-2, level 1C data (bottom).
 
 **_Practical 2 Exercise_**
 
-Repeat the steps in this practical for the level 2A data that you
-imported and renamed as s22a at the beginning of this practical.
-Thereafter, compare the water detection results and patterns with the
-s21c image results. Submit your final script.
+Repeat the steps in this practical for the Landsat-8 image collection. Thereafter, compare the water detection results and patterns with the Sentinel-2 image results. Submit your final script.
 
 To share your script, click on Get Link and then copy the script path. Send your completed script to **email.**
 
