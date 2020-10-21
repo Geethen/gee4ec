@@ -1,6 +1,6 @@
 ---
 title: Practical 2
-date: 2020-10-20T22:00:00+00:00
+date: 2020-10-20T22:00:00.000+00:00
 hero: "/images/prac_2_f1.png"
 excerpt: Spectral indices, atmospheric interference and water detection
 timeToRead: 3
@@ -23,7 +23,9 @@ By the end of this practical you should be able to:
 
 ***
 
-**Importing and Filtering** Import the Sentinel-2, level 1C data, and rename it s21c. Thereafter, import the level 2A product and rename it s22a. Lastly, add a marker on the Theewaterskloof dam. Building from the previous practical where you imported and filtered Sentinel-2 data, we will repeat these steps.
+**Importing and Filtering**
+
+ Import the Sentinel-2, level 1C data, and rename it s21c. Thereafter, import the level 2A product and rename it s22a. Lastly, add a marker on the Theewaterskloof dam. Building from the previous practical where you imported and filtered Sentinel-2 data, we will repeat these steps.
 
 ```js
 var filtered = s21c.filterBounds(Theewaterskloof)
