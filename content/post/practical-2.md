@@ -11,6 +11,10 @@ authors: []
 
 Access the completed practical script [here](https://code.earthengine.google.com/69f9fe758e00f7caba12f4f88352b49e)
 
+The end product
+
+![](/images/prac_2_f1.png)
+
 ***
 
 **Learning Objectives**
@@ -25,7 +29,7 @@ By the end of this practical you should be able to:
 
 **Importing and Filtering**
 
- Import the Sentinel-2, level 1C data, and rename it s21c. Thereafter, import the level 2A product and rename it s22a. Lastly, add a marker on the Theewaterskloof dam. Building from the previous practical where you imported and filtered Sentinel-2 data, we will repeat these steps.
+Import the Sentinel-2, level 1C data, and rename it s21c. Thereafter, import the level 2A product and rename it s22a. Lastly, add a marker on the Theewaterskloof dam. Building from the previous practical where you imported and filtered Sentinel-2 data, we will repeat these steps.
 
 ```js
 var filtered = s21c.filterBounds(Theewaterskloof)
