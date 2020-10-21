@@ -18,6 +18,8 @@ The end product
 ***
 
 **Learning Objectives**
+
+
 By the end of this practical you should be able to:
 
 1. Compute the Normalised Difference Vegetation Index (NDVI) and Normalised Difference Water Index (NDWI).
