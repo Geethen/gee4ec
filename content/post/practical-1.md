@@ -9,6 +9,8 @@ title = "Practical 1"
 +++
 **Practical 1: Importing, exploring and visualising datasets**
 
+Authored by Joseph White
+
 Access the completed practical scripts (1) [here](https://code.earthengine.google.com/?scriptPath=users%2Fjdmwhite%2FOTS-GEE4EC%3APractical_1%2FExploring_images) and (2) [here](https://code.earthengine.google.com/?scriptPath=users%2Fjdmwhite%2FOTS-GEE4EC%3APractical_1%2FVisualising_images)
 
 **Learning Objectives**
