@@ -86,8 +86,8 @@ var eviAll = MOD13Q1.select('EVI')
 To calculate the annual monthly sum of rainfall across Braulio Carrillo National Park from 1981 to 2019, reduce the monthly rainfall records by their sum per year as follows:
 
 var rainYr_list =  years.map(function(y){
-  var rain_year = rainAll.filter(ee.Filter.calendarRange(y, y, 'year')).sum().rename('rain_yr');
-  return rain_year.set('year', ee.Date.fromYMD(y,1,1)); 
+var rain_year = rainAll.filter(ee.Filter.calendarRange(y, y, 'year')).sum().rename('rain_yr');
+return rain_year.set('year', ee.Date.fromYMD(y,1,1));
 });
 
 This produces a list of 20 images, which you'll need to convert back to an ImageCollection. Then calculate the long-term annual rainfall patterns for Costa Rica as follows:
@@ -177,7 +177,7 @@ Now for the fun part! We can share this map with the world by creating a GEE App
 4. Your new URL will appear - Click this to see your first online interactive map (if you get an error message, follow the steps below instead).
 5. If you see a `Not ready` page, give it a few minutes and try again
 
-![](/images/prac4_f3a_fix.png)
+![](/images/prac4_f3a_fix_new.png)
 
 **Figure 3:** Steps to publish interactive map online. Use URL to access.
 
