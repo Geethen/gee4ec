@@ -85,12 +85,10 @@ var eviAll = MOD13Q1.select('EVI')
 
 To calculate the annual monthly sum of rainfall across Braulio Carrillo National Park from 1981 to 2019, reduce the monthly rainfall records by their sum per year as follows:
 
-```js
 var rainYr_list =  years.map(function(y){
   var rain_year = rainAll.filter(ee.Filter.calendarRange(y, y, 'year')).sum().rename('rain_yr');
   return rain_year.set('year', ee.Date.fromYMD(y,1,1)); 
 });
-```
 
 This produces a list of 20 images, which you'll need to convert back to an ImageCollection. Then calculate the long-term annual rainfall patterns for Costa Rica as follows:
 
