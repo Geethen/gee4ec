@@ -40,7 +40,6 @@ var MOD13Q1 = ee.ImageCollection("MODIS/006/MOD13Q1");
 
 The first dataset, [LSIB 2017](https://developers.google.com/earth-engine/datasets/catalog/WCMC_WDPA_current_polygons), contains polygon representations of all international boundaries. The second, [WDPA](https://developers.google.com/earth-engine/datasets/catalog/WCMC_WDPA_current_polygons), contains polygons of all the world's protected areas. The third, [CHIRPS](https://developers.google.com/earth-engine/datasets/catalog/UCSB-CHG_CHIRPS_PENTAD), is a gridded rainfall time series dataset (Funk et al 2015) and the last, [MOD13Q1](https://developers.google.com/earth-engine/datasets/catalog/MODIS_006_MOD13Q1), provides vegetation indexes (NDVI and EVI) depicting vegetation 'greenness' per 250m pixel.
 
-
 **Filtering data**
 
 First define variables for the temporal window of interest, including a start-date, end-date and the range of years and months. We will use these variables later to filter and summarise the long-term data.
@@ -181,6 +180,7 @@ Now for the fun part! We can share this map with the world by creating a GEE App
 5. If you see a `Not ready` page, give it a few minutes and try again
 
 ![](/images/prac4_f3a_fix.png)
+
 **Figure 3:** Steps to publish interactive map online. Use URL to access.
 
 If you get an error message, chances are you haven't accepted the terms and conditions of using GEE Apps in your Google Cloud Platform. To do so, follow these steps instead of the ones above.
