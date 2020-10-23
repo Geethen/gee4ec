@@ -2,7 +2,7 @@
 authors = []
 date = 2020-10-21T22:00:00Z
 excerpt = "Long-term patterns of rainfall in and around Braulio Carrillo National Park, Costa Rica"
-hero = "/images/prac4_0.png"
+hero = "/images/prac4_f0_final.png"
 timeToRead = 15
 title = "Practical 4"
 
@@ -12,6 +12,7 @@ title = "Practical 4"
 Access the completed practical script [here](https://code.earthengine.google.com/eacc7c0fad832d1fbba267538f137f20?noload=true)
 
 **Learning Objectives**
+
 By the end of this practical you should be able to:
 
 1. Access long-term rainfall data
@@ -21,14 +22,12 @@ By the end of this practical you should be able to:
 5. Compare rainfall and vegetation 'greenness" (i.e. rainfall as a driver of ecosystem processes like vegetation dynamics)
 6. Output data (csv, rasterStack) for analysis outside of GEE
 
-***
-
 **Introduction**
+
 Rainfall plays a central role in a myriad of natural processes, including river health, the transportation of nutrients, soil moisture, vegetation dynamics, fire regimes, animal movement and distribution patterns and landscape heterogeneity. Within protected areas these processes function together to safeguard ecosystem integrity. In the face of current climate change predictions, the spatio-temporal patterns of rainfall is an increasingly important component to include in any ecological study (MacFadyen et al 2018). Here we explore patterns of monthly rainfall across Costa Rica and the Braulio Carrillo National Park from 1981 to 2019 (39 years). We'll summarise monthly and annual rainfall patterns using line charts and examine the long-term spatial patterns of rainfall using an interactive map. Lastly, we'll take a look at how the temporal patterns of annual rainfall compares to those of vegetation vigour or 'greenness', highlighting its importance as a bottom-up ecosystem driver.
 
-***
-
 **Data import**
+
 The datasets we will use for this practical are all available on Google Earth Engine and can be accessed as follows (You can convert these to an import record, using `convert` from the pop-up message):
 
 ```js
@@ -40,9 +39,9 @@ var MOD13Q1 = ee.ImageCollection("MODIS/006/MOD13Q1");
 
 The first dataset, [LSIB 2017](https://developers.google.com/earth-engine/datasets/catalog/WCMC_WDPA_current_polygons), contains polygon representations of all international boundaries. The second, [WDPA](https://developers.google.com/earth-engine/datasets/catalog/WCMC_WDPA_current_polygons), contains polygons of all the world's protected areas. The third, [CHIRPS](https://developers.google.com/earth-engine/datasets/catalog/UCSB-CHG_CHIRPS_PENTAD), is a gridded rainfall time series dataset (Funk et al 2015) and the last, [MOD13Q1](https://developers.google.com/earth-engine/datasets/catalog/MODIS_006_MOD13Q1), provides vegetation indexes (NDVI and EVI) depicting vegetation 'greenness' per 250m pixel.
 
-***
 
 **Filtering data**
+
 First define variables for the temporal window of interest, including a start-date, end-date and the range of years and months. We will use these variables later to filter and summarise the long-term data.
 
 ```js
@@ -82,9 +81,8 @@ var eviAll = MOD13Q1.select('EVI')
     .filterBounds(costaRica_geo);
 ```
 
-***
-
 **Processing**
+
 To calculate the annual monthly sum of rainfall across Braulio Carrillo National Park from 1981 to 2019, reduce the monthly rainfall records by their sum per year as follows:
 
 ```js
@@ -103,9 +101,8 @@ var rainYr = ee.ImageCollection.fromImages(rainYr_list);
 var rainAnnual = rainYr.mean().clip(costaRica);
 ```
 
-***
-
 **Visualisation**
+
 Now let's plot these results on a map. First define the various map elements i.e. the `title` and `symbology` for the legend as follows:
 
 ```js
@@ -132,9 +129,8 @@ Map.add(title);
 ![](/images/prac4_f1_final.png)
 **Figure 1:** Map of long-term annual rainfall in Costa Rica from 1981 to 2019.
 
-***
-
 **Charting**
+
 Now chart annual rainfall results but summarised for Braulio Carrillo National Park using a line chart. To do this, first define the chart parameters (e.g. title and axis labels) and then create the line chart.
 
 ```js
@@ -173,9 +169,8 @@ panel.add(chart_annualPrecip)
 ![](/images/prac4_f2_new.png)
 **Figure 2:** Line chart of annual rainfall in Braulio Carrillo National Park from 1981 to 2019.
 
-***
-
 **Save your map online**
+
 Now for the fun part! We can share this map with the world by creating a GEE Application (App). To save your map online as your first GEE App, follow the steps below:
 
 1. Click the `Apps` button above
@@ -209,9 +204,8 @@ If you get an error message, chances are you haven't accepted the terms and cond
 ![](/images/prac4_f5_final.png)
 **Figure 5:** Your first online GEE App / interactive map interface.
 
-***
-
 **Relationship between annual rainfall and vegetation 'greenness'**
+
 Taking things even further, we could also combine the calculation of annual max rainfall with annual maximum EVI for Costa Rica for the same period, 2000 to 2019, to see whether there's a relationship between the two. What do you think we'll see?
 
 ```js
@@ -260,8 +254,6 @@ print(rain_ndvi_chart);
 ![](/images/prac4_f6_final.png)
 **Figure 6:** Dual axis chart of annual maximum rainfall versus vegetation 'greenness' or vigour using a MODIS Enhanced Vegetation Index (EVI) in Braulio Carrillo National Park from 2000 to 2019.
 
-***
-
 We could also directly check the correlation between the two variables as follows:
 
 ```js
@@ -288,9 +280,8 @@ print(correl_chart);
 ![](/images/prac4_new_f8.png)
 **Figure 7:** Results of a linear least squares regression with rainfall as the independent variable and EVI as the dependent variable.
 
-***
-
 **Data Export**
+
 To export the data shown in the created charts, you can simply `maximise` the chart and then click `Download` to export to formats `.CSV`, `.SVG` or `.PNG`.
 
 ![](/images/prac4_f5.png)
@@ -323,23 +314,20 @@ Export.table.toDrive({
 
 The last step, as always, is to save the script.
 
-***
-
 **Practical 4 Exercise**
+
 Repeat this practical but use NDVI instead of EVI and Germany instead of Costa Rica. You can also play around with different dates, keeping in mind the different date limits for each ImageCollection. To share your script, click on Get Link and then copy script path. Send your completed script to [ots.online.education@gmail.com](mailto:ots.online.education@gmail.com). If you're feeling adventurous, save the results as a new App and forward the URL link along with your script.
 
 Do you have any feedback for this practical? Please complete this quick (2-5 min) survey [here](https://forms.gle/hT11ReQpvG2oLDxF7).
 
-***
-
 **References**
+
 Funk C, Peterson P, Landsfeld M, Pedreros D, Verdin J, Shukla S, Husak G, Rowland J, Harrison L, Hoell A, Michaelsen J (2015) The climate hazards infrared precipitation with stations—a new environmental record for monitoring extremes. Scientific Data 2, 150066
 
 MacFadyen S, Zambatis N, Van Teeffelen AJA, Hui C (2018) Long-term rainfall regression surfaces for the Kruger National Park, South Africa: A spatio-temporal review of patterns from 1981-2015. International Journal of Climatology 38(5): 2506-2519
 
-***
-
 **Bonus Section**
+
 Similarly, you can calculate monthly rainfall for each year in Braulio Carrillo National Park from 1981 to 2019 by reducing the monthly rainfall records by their sum per year and month as follows:
 
 ```js
@@ -415,5 +403,3 @@ Export.image.toDrive({
   }
 });
 ```
-
-***
