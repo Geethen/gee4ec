@@ -2,14 +2,14 @@
 authors = []
 date = 2020-10-24T22:00:00Z
 excerpt = "Forest loss over multiple regions"
-hero = "/images/prac5_hero.png"
+hero = "/images/prac5_loss_pas.png"
 timeToRead = 3
 title = "Practical 5"
 
 +++
 **Practical 5:** Forest loss over multiple regions
 
-Access the completed practical script [here](https://code.earthengine.google.com/?scriptPath=users%2Fjdmwhite%2FOTS-GEE4EC%3APractical_5%2FForest_loss_over_multiple_regions)
+Access the completed practical script [here](https://code.earthengine.google.com/041096167d408510fcf8dd741390bc21)
 
 **Learning Objectives**
 
@@ -187,4 +187,4 @@ Repeat this practical but use an alternative country as a region of interest for
 
 Send your completed script to **email.**
 
-Do you have any feedback for this practical? Please complete this quick (2-5 min) survey [here](https://forms.gle/hT11ReQpvG2oLDxF7).
+Do you have any feedback for this practical? Please complete this quick (2-5 min) survey [here](https://forms.gle/cUNNiroV5Jfo8TSeA).
