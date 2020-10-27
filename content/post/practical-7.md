@@ -107,7 +107,7 @@ var areaDict = ee.Dictionary(item);
 var classNumber = ee.Number(areaDict.get('class')).format();
 var area = ee.Number(
 areaDict.get('sum')).divide(1e6).round();
-return ee.List(\[classNumber, area\]);
+return ee.List([classNumber, area]);
 });
 var result = ee.Dictionary(classAreaLists.flatten());
 print(result);
