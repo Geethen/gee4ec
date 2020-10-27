@@ -1,6 +1,6 @@
 ---
 title: Practical 7
-date: 2020-10-27T22:00:00+00:00
+date: 2020-10-27T22:00:00.000+00:00
 hero: "/images/prac_7_f1.png"
 excerpt: Binary change detection, computing area and charting
 timeToRead: 8
@@ -8,6 +8,8 @@ authors: []
 
 ---
 **Practical 7: Binary change detection, computing area and charting**
+
+Authored  by Geethen Singh
 
 Access the completed practical script [here](https://code.earthengine.google.com/fae000aed0572d8d6a6b9f0ca8192517)
 
