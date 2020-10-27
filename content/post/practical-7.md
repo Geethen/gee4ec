@@ -66,7 +66,7 @@ Note, we use the false argument to prevent the layers from loading (the default 
 
 **Area calculation and plotting**
 
-There are multiple ways to go about calculating the area of each of the three classes. We will look at three of these ways. This will also help you to become familiar with the common trade-offs between computational requirements the amount and the complexity of code you need to write.
+There are multiple ways to go about calculating the area of each of the three classes. We will look at three different ways. This will also help you to become familiar with the common trade-offs between computational requirements the amount and the complexity of code you need to write.
 
 **Option 1**
 
