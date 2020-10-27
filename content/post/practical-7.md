@@ -141,7 +141,7 @@ print(chart);
 
 The ‘best’ option to use is often case-specific and is dependent on your goal, it is likely that you prefer to create plots within R owing to the powerful and flexible visualisation libraries such as ggplot2. In that case, the first option is more ideal since I found it to be the most computationally efficient of the three options. More specifically, I used a lower scale value of 100 m for the last two options whilst I used the native 30 m scale value for the first option. Note: different scale values result in different final area estimates owing to the influences of spatial resolution. More specifically, when using the 100 m scale value, there was an inflated area value reported for the majority no-change class, and an underestimation in the area values for the two minority classes. This may largely be attributed to the different area to perimeter ratios associated with the different scale values.
 
-**Practical 4 Exercise**
+**Practical 7 Exercise**
 
 * Try to understand the influence of varying scale values on the reported area values for each of the classes and their potential influence on conservation efforts. We will discuss your thoughts in our first discussion session.
 * Using the protected area table that you imported at the beginning of this practical, investigate the afforestation/deforestation patterns within some of these protected areas.
