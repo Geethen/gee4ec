@@ -12,6 +12,7 @@ title = "Practical 6"
 Authored by Sandra MacFadyen
 
 Access the completed practical script [here](https://code.earthengine.google.com/63ca391e02cb163916a03a2c45200359?noload=true)
+
 Also please download the following shapefile delineating [regional boundaries](https://drive.google.com/file/d/1Acs8PLINsehpsZvDj-g9BnAkLuVYKVv3/view?usp=sharing) in Kruger.
 
 **Learning Objectives**
