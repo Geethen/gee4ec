@@ -62,7 +62,7 @@ var palette =['red','grey','green'];
 Map.addLayer(coverChange,{palette:palette},'Forest Cover Change 2000-2005',false);
 ```
 
-Note, we use the false argument to prevent the layers from loading (the default action) when the script is run. This may be useful when you do not want to view all the layers at once. Also, a palette can be specified by directly providing a colour name, as opposed to hex colour codes.
+Note, we use the false argument to prevent the layers from loading (the default action) when the script is run. This may be useful when you do not want to view all the layers at once.
 
 **Area calculation and plotting**
 
