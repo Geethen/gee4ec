@@ -64,45 +64,6 @@ Map.addLayer(coverChange,{palette:palette},'Forest Cover Change 2000-2005',false
 
 Note, we use the false argument to prevent the layers from loading (the default action) when the script is run. This may be useful when you do not want to view all the layers at once.
 
-**Area staistics**
-you may be interested in calculating the proportion of forest at different levels of conservation management. The next section looks at how this can be achieved. The abiity to compute area for regions is heavily reliant on reduce functions.
-
-```js
-//Total forest area (combined for 2000 and 2005)
-var maskArea = ee.Number(mask.multiply(ee.Image.pixelArea()).reduceRegion({
-  reducer:ee.Reducer.sum(),
-  geometry: country.geometry(),
-  scale:30,
-  maxPixels: 1e13}).get('tree_canopy_cover')).divide(1e6);
-print('Total forest area (2000 and 2005)', maskArea);
-
-//Area of country  
-var totalArea = country.geometry().area().divide(1e6);
-print('Area of country', totalArea);
-
-//Proportion of forest in country
-var forestProp = maskArea.divide(totalArea).multiply(100);
-print('Proportion of forest in country', forestProp);
-
-//Area for each protected area
-var regionArea = mask.multiply(ee.Image.pixelArea().divide(1e6)).reduceRegions(PAs.filterBounds(country),ee.Reducer.sum(),30);
-print('Area by protected area within country', regionArea);
-
-//Area of forest as a perecntage of protected area
-var paForestProp = regionArea.map(function(ft){
-  var ftArea = ee.Number(ft.geometry().area().divide(1e6));
-  var ftForestArea = ee.Number(ft.get('sum'));
-  return ft.set('forestProp', ee.Number(ftForestArea.divide(ftArea).multiply(100)));
-});
-print('Proportion of Forest in PA', paForestProp);
-
-//Area of forest changes in protected areas
-var paChangeArea = mask.multiply(ee.Image.pixelArea().divide(1e6))
-                    .addBands(coverChange)
-                    .reduceRegions(PAs.filterBounds(country), ee.Reducer.sum().group(1,'tree_canopy_cover'),30);
-print('Area of forest change witthin PAs', paChangeArea);
-```
-
 **Area calculation and plotting**
 
 There are multiple ways to go about calculating the area of each of the three classes. We will look at three different ways. This will also help you to become familiar with the common trade-offs between computational requirements the amount and the complexity of code you need to write.
@@ -179,6 +140,46 @@ print(chart);
 ```
 
 The ‘best’ option to use is often case-specific and is dependent on your goal, it is likely that you prefer to create plots within R owing to the powerful and flexible visualisation libraries such as ggplot2. In that case, the first option is more ideal since I found it to be the most computationally efficient of the three options. More specifically, I used a lower scale value of 100 m for the last two options whilst I used the native 30 m scale value for the first option. Note: different scale values result in different final area estimates owing to the influences of spatial resolution. More specifically, when using the 100 m scale value, there was an inflated area value reported for the majority no-change class, and an underestimation in the area values for the two minority classes. This may largely be attributed to the different area to perimeter ratios associated with the different scale values.
+
+Additional Section
+**Area staistics**
+you may be interested in calculating the proportion of forest at different levels of conservation management. The next section looks at how this can be achieved. The abiity to compute area for regions is heavily reliant on reduce functions.
+
+```js
+//Total forest area (combined for 2000 and 2005)
+var maskArea = ee.Number(mask.multiply(ee.Image.pixelArea()).reduceRegion({
+  reducer:ee.Reducer.sum(),
+  geometry: country.geometry(),
+  scale:30,
+  maxPixels: 1e13}).get('tree_canopy_cover')).divide(1e6);
+print('Total forest area (2000 and 2005)', maskArea);
+
+//Area of country  
+var totalArea = country.geometry().area().divide(1e6);
+print('Area of country', totalArea);
+
+//Proportion of forest in country
+var forestProp = maskArea.divide(totalArea).multiply(100);
+print('Proportion of forest in country', forestProp);
+
+//Area for each protected area
+var regionArea = mask.multiply(ee.Image.pixelArea().divide(1e6)).reduceRegions(PAs.filterBounds(country),ee.Reducer.sum(),30);
+print('Area by protected area within country', regionArea);
+
+//Area of forest as a perecntage of protected area
+var paForestProp = regionArea.map(function(ft){
+  var ftArea = ee.Number(ft.geometry().area().divide(1e6));
+  var ftForestArea = ee.Number(ft.get('sum'));
+  return ft.set('forestProp', ee.Number(ftForestArea.divide(ftArea).multiply(100)));
+});
+print('Proportion of Forest in PA', paForestProp);
+
+//Area of forest changes in protected areas
+var paChangeArea = mask.multiply(ee.Image.pixelArea().divide(1e6))
+                    .addBands(coverChange)
+                    .reduceRegions(PAs.filterBounds(country), ee.Reducer.sum().group(1,'tree_canopy_cover'),30);
+print('Area of forest change witthin PAs', paChangeArea);
+```
 
 **Practical 7 Exercise**
 
