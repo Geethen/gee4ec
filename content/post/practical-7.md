@@ -147,7 +147,7 @@ The ‘best’ option to use is often case-specific and is dependent on your goa
 
  **Area statistics**
 
- you may be interested in calculating the proportion of forest at different levels of conservation management. The next section looks at how this can be achieved. The abiity to compute area for regions is heavily reliant on reduce functions.
+You may be interested in calculating the proportion of forest at different levels of conservation management. The next section looks at how this can be achieved. The ability to compute areas for regions is heavily reliant on reduce functions.
 
 ```js
 //Total forest area (combined for 2000 and 2005)
