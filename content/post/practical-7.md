@@ -35,7 +35,7 @@ By the end of this practical you should be able to:
 
 There are three datasets that you require for this practical. First you will add the Global Forest Cover Change (GFCC) dataset and rename this ‘treeCover’. Next, you will import two vector datasets. The first is a feature collection that stores country boundaries and the second is a collection of global protected area boundaries. You can find the first country boundary dataset by searching ‘Boundary’ and selecting the LSIB detailed layer version. Rename this layer ‘countries’. You can find the second table by searching World Database of Protected Areas (WDPA) polygons and renaming this layer as ‘PAs’ in your imports section.
 
-To easily select Costa Rica from its feature collection using the added marker, you will use filterBounds. This is the same function you previously used to filter an image collection.
+To easily select Costa Rica from its feature collection using the added marker, you will use filterBounds. This is the same function you previously used to filter an image collection (but the feature collection version).
 
 ```js
 var country = countries.filterBounds(geometry);
