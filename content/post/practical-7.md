@@ -36,7 +36,7 @@ There are three datasets that you require for this practical. First you will add
 To easily select Costa Rica from its feature collection using the added marker, you will use filterBounds. This is the same function you previously used to filter an image collection.
 
 ```js
-var country = countries.filterBounds(geometry).union();
+var country = countries.filterBounds(geometry);
 var treeCov2000 = treeCover
 .filterBounds(country)
 .filter(ee.Filter.eq('year',2000))
