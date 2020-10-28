@@ -178,7 +178,7 @@ print('Proportion of Forest in PA', paForestProp);
 var paChangeArea = mask.multiply(ee.Image.pixelArea().divide(1e6))
                     .addBands(coverChange)
                     .reduceRegions(PAs.filterBounds(country), ee.Reducer.sum().group(1,'tree_canopy_cover'),30);
-print('Area of forest change witthin PAs', paChangeArea);
+print('Area of forest change within PAs', paChangeArea);
 ```
 
 **Practical 7 Exercise**
