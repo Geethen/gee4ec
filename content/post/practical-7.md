@@ -23,6 +23,8 @@ By the end of this practical you should be able to:
 
 3\. Plot the computed area coverage using a pie chart.
 
+4\. Confidently use reduce functions
+
 **The end product**
 
 ![](/images/prac_7_f1.png)
