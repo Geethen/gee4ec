@@ -11,7 +11,7 @@ authors: []
 
 Authored  by Geethen Singh
 
-Access the completed practical script [here](https://code.earthengine.google.com/fae000aed0572d8d6a6b9f0ca8192517)
+Access the completed practical script [here](https://code.earthengine.google.com/34c8c42ca7c4678e8218b5e1f0d04c42)
 
 **Learning Objectives**
 
