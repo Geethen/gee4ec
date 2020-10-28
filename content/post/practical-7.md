@@ -141,11 +141,13 @@ colors: palette,
 print(chart);
 ```
 
-The ‘best’ option to use is often case-specific and is dependent on your goal, it is likely that you prefer to create plots within R owing to the powerful and flexible visualisation libraries such as ggplot2. In that case, the first option is more ideal since I found it to be the most computationally efficient of the three options. More specifically, I used a lower scale value of 100 m for the last two options whilst I used the native 30 m scale value for the first option. Note: different scale values result in different final area estimates owing to the influences of spatial resolution. More specifically, when using the 100 m scale value, there was an inflated area value reported for the majority no-change class, and an underestimation in the area values for the two minority classes. This may largely be attributed to the different area to perimeter ratios associated with the different scale values.
+The ‘best’ option to use is often case-specific and is dependent on your goal, it is likely that you prefer to create plots within R owing to the powerful and flexible visualisation libraries such as ggplot2. In that case, the first option is more ideal since I found it to be the most computationally efficient of the three options. More specifically, I used a lower scale value of 100 m for the last two options whilst I used the native 30 m scale value for the first option. Note: different scale values result in different final area estimates owing to the influences of spatial resolution. More specifically, when using the 100 m scale value, there was an inflated area value reported for the majority no-change class, and an underestimation in the area values for the two minority classes. This may largely be attributed to the downsampling.
 
-Additional Section
-**Area staistics**
-you may be interested in calculating the proportion of forest at different levels of conservation management. The next section looks at how this can be achieved. The abiity to compute area for regions is heavily reliant on reduce functions.
+**Additional Section**
+
+ **Area statistics**
+
+ you may be interested in calculating the proportion of forest at different levels of conservation management. The next section looks at how this can be achieved. The abiity to compute area for regions is heavily reliant on reduce functions.
 
 ```js
 //Total forest area (combined for 2000 and 2005)
