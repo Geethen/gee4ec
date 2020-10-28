@@ -64,6 +64,39 @@ Map.addLayer(coverChange,{palette:palette},'Forest Cover Change 2000-2005',false
 
 Note, we use the false argument to prevent the layers from loading (the default action) when the script is run. This may be useful when you do not want to view all the layers at once.
 
+**Area staistics**
+you may be interested in calculating the proportion of forest at different levels of conservation management. The next section looks at how this can be achieved. The abiity to compute area for regions is heavily reliant on reduce functions.
+
+```js
+//Total forest area (combined for 2000 and 2005)
+var maskArea = ee.Number(mask.multiply(ee.Image.pixelArea()).reduceRegion({
+  reducer:ee.Reducer.sum(),
+  geometry: country.geometry(),
+  scale:30,
+  maxPixels: 1e13}).get('tree_canopy_cover')).divide(1e6);
+print('Total forest area (2000 and 2005)', maskArea);
+
+//Area of country  
+var totalArea = country.geometry().area().divide(1e6);
+print('Area of country', totalArea);
+
+//Proportion of forest in country
+var forestProp = maskArea.divide(totalArea).multiply(100);
+print('Proportion of forest in country', forestProp);
+
+//Area for each protected area
+var regionArea = mask.multiply(ee.Image.pixelArea().divide(1e6)).reduceRegions(PAs.filterBounds(country),ee.Reducer.sum(),30);
+print('Area by protected area within country', regionArea);
+
+//Area of forest as a perecntage of protected area
+var paForestProp = regionArea.map(function(ft){
+  var ftArea = ee.Number(ft.geometry().area().divide(1e6));
+  var ftForestArea = ee.Number(ft.get('sum'));
+  return ft.set('forestProp', ee.Number(ftForestArea.divide(ftArea).multiply(100)));
+});
+print('Proportion of Forest in PA', paForestProp);
+```
+
 **Area calculation and plotting**
 
 There are multiple ways to go about calculating the area of each of the three classes. We will look at three different ways. This will also help you to become familiar with the common trade-offs between computational requirements the amount and the complexity of code you need to write.
