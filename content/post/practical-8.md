@@ -2,7 +2,7 @@
 authors = []
 date = 2020-10-28T22:00:00Z
 excerpt = "Species distribution modeling (classification)"
-hero = "/images/prac8_hero.png"
+hero = "/images/prac8_hero2.png"
 timeToRead = 3
 title = "Practical 8"
 
@@ -26,7 +26,7 @@ Species Distribution Models are a valuable tool in ecology and conservation, pro
 
 However, they need to be used carefully and with full understanding of the models used and outputs provided. For example, we may not have a full sample of species localities or not have all of the relevant environmental variables. This means we need to have a strong understanding of the species sampling, biogeography and potentially biotic interactions to accurately predict their distributions. Take a look at [this](https://damariszurell.github.io/SDM-Intro/) R tutorial for more information on SDMs.
 
-SDMs are not a feature commonly used in GEE and therefore the documentation does not have full support as other algorithms or processes may have. With further use of this platform this is likely to change. The strong potential of GEE in the SDM space is the ability to process large amounts of data very quickly. Additionally, there is a large value in extracting covariate data to complete SDM analyses in other programs. 
+SDMs are not a feature commonly used in GEE and therefore the documentation does not have full support as other algorithms or processes may have. With further use of this platform this is likely to change. The strong potential of GEE in the SDM space is the ability to process large amounts of data very quickly. Additionally, there is a large value in extracting covariate data to complete SDM analyses in other programs.
 
 **Importing data**
 
@@ -53,7 +53,7 @@ var terraclim = ee.ImageCollection("IDAHO_EPSCOR/TERRACLIMATE");
 var elev = ee.Image("USGS/SRTMGL1_003");
 ```
 
-The last dataset we require is our species locality information. We will use data sourced from GBIF (Global Biodiversity Information Facility), which has a massive online collection of freely available biodiversity data. Our species of interest - _Solanum acuale_ - is a species commonly used Species Distribution Modeling tutorials. This data has been extracted from the **R dismo** package. This dataset has already been uploaded as an asset and made publicly available. We load this data in as an asset and then add it to our map. 
+The last dataset we require is our species locality information. We will use data sourced from GBIF (Global Biodiversity Information Facility), which has a massive online collection of freely available biodiversity data. Our species of interest - _Solanum acuale_ - is a species commonly used Species Distribution Modeling tutorials. This data has been extracted from the **R dismo** package. This dataset has already been uploaded as an asset and made publicly available. We load this data in as an asset and then add it to our map.
 
 ```js
 var presences = ee.FeatureCollection("users/jdmwhite/solanum_acuale");
@@ -79,7 +79,7 @@ The next step is to do some pre-processing on our environmental covariates. As t
 var terraclim = ee.Image(terraclim.select(['aet','def','pdsi','pet','soil']).mean());
 ```
 
-For terrain, we use the elevation data to find both the aspect and slope for each pixel, using the ee.Terrain() group of functions. We add these bands together to make a full terrain dataset. 
+For terrain, we use the elevation data to find both the aspect and slope for each pixel, using the ee.Terrain() group of functions. We add these bands together to make a full terrain dataset.
 
 ```js
 var terrain = elev.addBands(ee.Terrain.aspect(elev)).addBands(ee.Terrain.slope(elev));
@@ -94,7 +94,7 @@ print('Check all covariates:', vars);
 
 At this point it is valuable to calculate a correlation matrix and select only variables that are uncorrelated below a certain threshold. For GEE script on this, see [https://code.earthengine.google.com/27557ebe40e549f604ed1005e047b75a](https://code.earthengine.google.com/27557ebe40e549f604ed1005e047b75a "https://code.earthengine.google.com/27557ebe40e549f604ed1005e047b75a")
 
-After running this code, you may want to select only a sub-sample of data. Alternatively, you want to create a principal component based on your highly correlated covariates. 
+After running this code, you may want to select only a sub-sample of data. Alternatively, you want to create a principal component based on your highly correlated covariates.
 
 In this example for ease of computation, comment out the full covariate dataset above and go ahead and only use a sub-sample of worldclim covariates below:
 
@@ -170,7 +170,7 @@ Export.table.toDrive({collection: trainingData,
 
 **Analysis: Fit our classifier using Random Forest**
 
-There are several different options for classifiers in GEE, which can be viewed in the Docs tab by typing ee.Classifier. We will be using the smileRandomForest() function as it allows for variable importance values to be extracted (which is currently not available for MaxEnt models in GEE). There are several options one can add to fine-tune the model to your own specifications. For this function, the only argument that is required is the number of decision trees to use. We select the output mode of probability. However, for later model evaluation, you will need to select classification. 
+There are several different options for classifiers in GEE, which can be viewed in the Docs tab by typing ee.Classifier. We will be using the smileRandomForest() function as it allows for variable importance values to be extracted (which is currently not available for MaxEnt models in GEE). There are several options one can add to fine-tune the model to your own specifications. For this function, the only argument that is required is the number of decision trees to use. We select the output mode of probability. However, for later model evaluation, you will need to select classification.
 
 ```js
 // Pull out the label and band names for the models
@@ -190,7 +190,7 @@ print("Check model output:", model);
 
 We will then extract the variable importance data and add it to a chart. To pull the information from the RandomForest model, we use explain() and then get() to pull the specific information we are interested in.
 
-We then add this to a chart for visualization. The RandomForest in GEE uses the Gini index for variable importance measures. Reference the WorldClim dataset to see the names of each bioclim variable or alternatively rename the band names. 
+We then add this to a chart for visualization. The RandomForest in GEE uses the Gini index for variable importance measures. Reference the WorldClim dataset to see the names of each bioclim variable or alternatively rename the band names.
 
 ```js
 // Variable importance as Gini index
@@ -308,7 +308,7 @@ A useful extra step is to add a legend to aid our visualisation. This needs to b
         {width: '230px', position: 'bottom-center'})); // change location here to chose where to put legend
 ```
 
-We can also export our SDM prediction Image as a PNG. Do to this, we use the getThumbURL() function. To increase the resolution of this image, change the dimensions argument for the width. The height will be automatically calibrated. This produces a url for a PNG thumbnail, which can then be downloaded to your computer. 
+We can also export our SDM prediction Image as a PNG. Do to this, we use the getThumbURL() function. To increase the resolution of this image, change the dimensions argument for the width. The height will be automatically calibrated. This produces a url for a PNG thumbnail, which can then be downloaded to your computer.
 
 ```js
     // Specify region by your polygon, define the chosen palette & set width size (height adjusts automatically).
@@ -323,7 +323,7 @@ We can also export our SDM prediction Image as a PNG. Do to this, we use the get
 
 **Model evaluation**
 
-An important last step in all classification modelling is to determine the accuracy of the probability of occurrence or presence/absence map. There are several methods available to produce metrics on model (in)accuracy. The code for this has been included here, so as to produce the a full workflow for GEE classification. However, the metrics will only be covered in depth in the next practical. 
+An important last step in all classification modelling is to determine the accuracy of the probability of occurrence or presence/absence map. There are several methods available to produce metrics on model (in)accuracy. The code for this has been included here, so as to produce the a full workflow for GEE classification. However, the metrics will only be covered in depth in the next practical.
 
 To run these model evaluation metrics, you will need to go back to your ee.Classifier.smileRandomForest() function and change the setOutputMode() from 'PROBABILITY' to 'CLASSIFICATION'.
 
