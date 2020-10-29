@@ -7,7 +7,7 @@ timeToRead: 8
 authors: []
 
 ---
-**Practical 9, part 1: Supervised learning 2: Land cover classification.**
+**Practical 9, part 1: Supervised learning 2: Landcover classification.**
 
 Authored by Geethen Singh
 
