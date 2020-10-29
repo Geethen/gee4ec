@@ -1,6 +1,6 @@
 ---
 title: Practical 9
-date: 2020-10-29T22:00:00+00:00
+date: 2020-10-29T22:00:00.000+00:00
 hero: "/images/prac9_f4.png"
 excerpt: 'Supervised learning 2: Land cover classification.'
 timeToRead: 8
@@ -8,6 +8,8 @@ authors: []
 
 ---
 **Practical 9, part 1: Supervised learning 2: Land cover classification.**
+
+Authored by Geethen Singh
 
 Access the complete practical, part 1 script [here](https://code.earthengine.google.com/63bf79381841c0d81c3afaea76d08040)
 
@@ -30,7 +32,7 @@ By the end of this practical you should be able to:
 
 **Import data**
 
-For this practical, you will be required to import Landsat-8 surface reflectance and Sentinel-1 Ground Range Detected imagery (GRD) data. Rename these as l8sr and s1 respectively. You have been provided with reference points dataset (four feature collections within the imports section). However, you have the functionality within GEE to create your own reference points for each of the four classes of interest i.e. water, built-up areas, tree-cover, and other.
+For this practical, you will be required to import Landsat-8 surface reflectance and Sentinel-1 Ground Range Detected imagery (GRD) data. Rename these as l8sr and s1 respectively. You have been provided with a reference points dataset (four feature collections within the imports section). However, you have the functionality within GEE to create your own reference points for each of the four classes of interest i.e. water, built-up areas, tree-cover, and other.
 
 ***
 
@@ -95,7 +97,7 @@ var test = new_table.filter(ee.Filter.gte('random', 0.80)).aside(print);
 
 **Extracting the spectral signatures**
 
-At this point, we have our response and explanatory variables prepared and we can move on to extracting the spectral signatures for each of the points. The ‘tileScale’ argument may be useful when working with large computations that fail due to computation errors.
+At this point, we have our response and explanatory variables prepared. We can move on to extracting the spectral signatures for each of the points. The ‘tileScale’ argument may be useful when working with large computations that fail due to computation errors.
 
 ```js
 var Features = composite.sampleRegions({
