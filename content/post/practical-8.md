@@ -348,4 +348,4 @@ To run these model evaluation metrics, you will need to go back to your ee.Class
     print('Users Accuracy', Test.errorMatrix('Presence', 'classification').consumersAccuracy());
 ```
 
-Do you have any feedback for this practical? Please complete this quick (2-5 min) survey [here](https://forms.gle/hT11ReQpvG2oLDxF7).
+Do you have any feedback for this practical? Please complete this quick (2-5 min) survey [here](https://forms.gle/hwkZL9oqWczGKU9PA).
