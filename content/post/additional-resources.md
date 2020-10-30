@@ -1,7 +1,6 @@
 +++
 authors = []
 date = 2020-10-28T22:00:00Z
-draft = true
 excerpt = "Google Earth Engine Resources for additional examples or help"
 hero = "/images/google_earth_engine.jpg"
 timeToRead = 0
