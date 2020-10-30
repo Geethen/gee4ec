@@ -91,19 +91,19 @@ The next step is to split this data into a training and testing partition. The t
 //Stratified random sampling for each class
 var new_table = water.randomColumn({seed: 1});
 var wtraining = new_table.filter(ee.Filter.lt('random', 0.80));
-var wtest = new_table.filter(ee.Filter.gt('random', 0.80));
+var wtest = new_table.filter(ee.Filter.gte('random', 0.80));
 
 var new_table = tree_cover.randomColumn({seed: 1});
 var tctraining = new_table.filter(ee.Filter.lt('random', 0.80));
-var tctest = new_table.filter(ee.Filter.gt('random', 0.80));
+var tctest = new_table.filter(ee.Filter.gte('random', 0.80));
 
 var new_table = built_up.randomColumn({seed: 1});
 var butraining = new_table.filter(ee.Filter.lt('random', 0.80));
-var butest = new_table.filter(ee.Filter.gt('random', 0.80));
+var butest = new_table.filter(ee.Filter.gte('random', 0.80));
 
 var new_table = other.randomColumn({seed: 1});
 var otraining = new_table.filter(ee.Filter.lt('random', 0.80));
-var otest = new_table.filter(ee.Filter.gt('random', 0.80));
+var otest = new_table.filter(ee.Filter.gte('random', 0.80));
 
 //Combine land-cover reference points for training partition
 var training = wtraining.merge(tctraining).merge(butraining).merge(otraining).aside(print, 'training partition');
