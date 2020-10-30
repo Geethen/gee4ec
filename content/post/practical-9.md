@@ -88,9 +88,27 @@ var composite = filtered.addBands(s1).aside(print).clip(geometry);
 The next step is to split this data into a training and testing partition. The training partition is used to fit the model whilst the test data is used to evaluate the accuracy of the model. Here, we use a split of 80% train and 20% test. We set the seed to ensure we end up with roughly the same train and test partition in the case of re-running the model.
 
 ```js
-var new_table = new_table.randomColumn({seed: 1});
-var training = new_table.filter(ee.Filter.lt('random', 0.80)).aside(print);
-var test = new_table.filter(ee.Filter.gte('random', 0.80)).aside(print);
+//Stratified random sampling for each class
+var new_table = water.randomColumn({seed: 1});
+var wtraining = new_table.filter(ee.Filter.lt('random', 0.80));
+var wtest = new_table.filter(ee.Filter.gt('random', 0.80));
+
+var new_table = tree_cover.randomColumn({seed: 1});
+var tctraining = new_table.filter(ee.Filter.lt('random', 0.80));
+var tctest = new_table.filter(ee.Filter.gt('random', 0.80));
+
+var new_table = built_up.randomColumn({seed: 1});
+var butraining = new_table.filter(ee.Filter.lt('random', 0.80));
+var butest = new_table.filter(ee.Filter.gt('random', 0.80));
+
+var new_table = other.randomColumn({seed: 1});
+var otraining = new_table.filter(ee.Filter.lt('random', 0.80));
+var otest = new_table.filter(ee.Filter.gt('random', 0.80));
+
+//Combine land-cover reference points for training partition
+var training = wtraining.merge(tctraining).merge(butraining).merge(otraining).aside(print, 'training partition');
+var test = wtraining.merge(tctest).merge(butest).merge(otest).aside(print, 'test partition');
+var points = training.merge(test).aside(print,'all points');
 ```
 
 ***
