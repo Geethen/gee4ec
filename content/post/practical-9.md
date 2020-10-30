@@ -212,4 +212,4 @@ Reference
 
 Meyer, H. and Pebesma, E., 2020. Predicting into unknown space? Estimating the area of applicability of spatial prediction models. arXiv preprint arXiv:2005.07939.
 
-Do you have any feedback for this practical? Please complete this quick (2-5 min) survey [here](https://forms.gle/hT11ReQpvG2oLDxF7).
+Do you have any feedback for this practical? Please complete this quick (2-5 min) survey [here](https://forms.gle/BdeuMQcEpSAHweDPA).
