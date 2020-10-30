@@ -11,7 +11,7 @@ authors: []
 
 Authored by Geethen Singh
 
-Access the complete practical, part 1 script [here](https://code.earthengine.google.com/63bf79381841c0d81c3afaea76d08040)
+Access the complete practical, part 1 script [here](https://code.earthengine.google.com/2779a5ccfdd9da5137712c856daa89d4)
 
 **Learning Objectives**
 
@@ -111,6 +111,8 @@ tileScale:16
 ***
 
 **Model fitting**
+
+We fit a random forest model on the extracted spectral data for the training data partition. We choose a value of 100 since this is a reasonable value to use based on default settings in pythons scikit-learn package. Choosing a larger value would increase the number of decision trees and increase the likelihood that our model overfits to our training data. Simultaneously, selecting too few trees may result in underfitting to our data.
 
 ```js
 var trainedClassifier = ee.Classifier.randomForest(100)
